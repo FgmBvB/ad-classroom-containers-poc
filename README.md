@@ -1,2 +1,44 @@
-# ad-classroom-containers-poc
-A Proof of Concept for integrating Kubernetes-based development environments into existing Active Directory classrooms.
+# Proof of Concept for Integrating Container-Based Development Environments into Existing Active Directory Classrooms
+A final degree project exploring the feasibility of integrating container-based development environments into traditional Windows classrooms managed by Active Directory Domain Services (AD DS).
+
+## Overview
+
+Many educational institutions, particularly those offering technology-related programs, rely on Windows-based computer labs managed through Active Directory Domain Services (AD DS). This infrastructure provides centralized authentication, user management, and policy enforcement, but it was not originally designed for container-based development workflows.
+
+As container technologies have become increasingly common in modern software development, integrating them into existing educational infrastructures without disrupting established IT environments remains a significant challenge.
+
+This project explores the feasibility of integrating container-based development environments into traditional Active Directory classrooms through a Proof of Concept.
+
+**Research Question**
+
+> Can container-based development environments be integrated into existing Active Directory classrooms without replacing the existing infrastructure?
+
+## Key Features
+
+- Proof of Concept for integrating containerized development environments into existing Active Directory classrooms.
+- Kubernetes (k3s) running on WSL2.
+- Automated deployment and provisioning using PowerShell.
+- Browser-based development environment using VS Code Server.
+- Persistent storage for each student.
+- Investigation of networking issues in a WSL2 and VMware environment.
+- Documentation of implementation challenges, design decisions, workarounds, and identified limitations.
+
+## Problem Statement
+
+## Objectives
+
+## Proposed Architecture
+
+## Proof of Concept
+
+## Implementation Challenges
+
+## Results
+
+## Limitations
+
+## Future Work
+
+## Technologies Used
+
+## License

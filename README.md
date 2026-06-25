@@ -52,7 +52,7 @@ The proposed architecture is based on a Windows workstation running WSL2 and a l
 
 The following diagram illustrates the overall architecture of the Proof of Concept.
 
-> Architecture diagram coming soon.
+![Architecture overview](images/architecture-overview.png)
 
 ## Proof of Concept
 

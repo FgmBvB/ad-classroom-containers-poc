@@ -48,6 +48,12 @@ To achieve this goal, the project pursues the following objectives:
 
 ## Proposed Architecture
 
+The proposed architecture is based on a Windows workstation running WSL2 and a lightweight Kubernetes (k3s) cluster. Student development environments are deployed as isolated containers running VS Code Server, with persistent storage mapped to the Windows host.
+
+The following diagram illustrates the overall architecture of the Proof of Concept.
+
+> Architecture diagram coming soon.
+
 ## Proof of Concept
 
 ## Implementation Challenges

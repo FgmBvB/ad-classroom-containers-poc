@@ -34,6 +34,17 @@ Replacing an existing classroom infrastructure is often impractical due to finan
 This project investigates whether a Kubernetes-based container platform can be integrated into an existing Active Directory classroom through a Proof of Concept, minimizing infrastructure changes while providing isolated development environments for students.
 
 ## Objectives
+The main objective of this Proof of Concept is to evaluate the feasibility of integrating container-based development environments into existing Active Directory classrooms without replacing the existing infrastructure.
+
+To achieve this goal, the project pursues the following objectives:
+
+- Design a container-based development environment using Kubernetes (k3s) and WSL2.
+- Provide isolated development environments for multiple students.
+- Automate the deployment process using PowerShell.
+- Provide persistent storage for each student environment.
+- Minimize changes to the existing Active Directory infrastructure.
+- Evaluate networking compatibility between Windows, WSL2, Hyper-V, and VMware.
+- Identify implementation challenges and document the adopted workarounds.
 
 ## Proposed Architecture
 

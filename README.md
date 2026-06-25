@@ -58,6 +58,32 @@ The following diagram illustrates the overall architecture of the Proof of Conce
 
 ## Proof of Concept
 
+This project implements a Proof of Concept (PoC) demonstrating that modern container-based development environments can be integrated into existing Active Directory classrooms without replacing the current infrastructure.
+
+The implementation was designed for educational environments where Windows-based workstations are already managed through Active Directory Domain Services (AD DS). Instead of introducing dedicated servers, the existing classroom computers participate in a lightweight Kubernetes cluster.
+
+### Main Characteristics
+
+- Teacher workstation acts as the Kubernetes control plane.
+- Student workstations join the cluster as worker nodes using WSL2.
+- Development environments are deployed as isolated Kubernetes pods.
+- Student files are stored in Windows host folders using bind mounts.
+- Existing Active Directory authentication and classroom management remain unchanged.
+- The solution reuses the hardware resources already available in the classroom.
+
+### Demonstrated Features
+
+The Proof of Concept successfully demonstrated:
+
+- Automated deployment of development environments.
+- Multi-student isolated workspaces.
+- Persistent storage across sessions.
+- Browser-based access to development tools.
+- Centralized management through Kubernetes and Portainer.
+- Compatibility with existing Windows classroom infrastructure.
+
+This repository documents both the implementation process and the technical challenges encountered while integrating Kubernetes, WSL2, Hyper-V, and VMware into an educational environment.
+
 ## Implementation Challenges
 
 ## Results

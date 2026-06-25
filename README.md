@@ -25,6 +25,14 @@ This project explores the feasibility of integrating container-based development
 
 ## Problem Statement
 
+Many educational institutions offering technology-related programs rely on Windows-based computer labs managed through Active Directory Domain Services (AD DS). This infrastructure simplifies user authentication, centralized management, and policy enforcement, making it a common choice for educational environments.
+
+However, modern software development increasingly relies on containerized environments to ensure consistency, isolation, and reproducibility. Integrating these technologies into existing Active Directory classrooms presents several challenges, including deployment complexity, infrastructure compatibility, networking, and persistent storage.
+
+Replacing an existing classroom infrastructure is often impractical due to financial, administrative, and operational constraints. Therefore, educational institutions require solutions capable of introducing modern development environments while preserving their current infrastructure and management model.
+
+This project investigates whether a Kubernetes-based container platform can be integrated into an existing Active Directory classroom through a Proof of Concept, minimizing infrastructure changes while providing isolated development environments for students.
+
 ## Objectives
 
 ## Proposed Architecture

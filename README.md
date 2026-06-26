@@ -102,6 +102,36 @@ The main challenges identified were:
 
 ## Results
 
+### Challenge 1 – WSL2 Environment Initialization
+
+#### Expected Behavior
+
+The Kubernetes environment should become available automatically after Windows startup, allowing the classroom infrastructure to operate without requiring manual intervention.
+
+#### Observed Behavior
+
+During testing, after restarting Windows, the WSL2 environment was not automatically initialized. As a consequence, the Kubernetes worker node was not available immediately after system startup.
+
+The issue was resolved by manually launching the Ubuntu distribution. Once Ubuntu started, the WSL2 environment initialized correctly and the k3s service automatically joined the Kubernetes cluster without requiring any additional commands or manual configuration.
+
+#### Investigation
+
+Several approaches were evaluated to automate the initialization process, including Linux startup mechanisms such as `crontab` and different Windows scripting techniques. Despite these attempts, a reliable automatic startup procedure was not achieved within the scope of this Proof of Concept.
+
+Further investigation is required to determine whether this behavior is related to WSL2 initialization, Windows startup behavior, or the interaction between virtualization components installed on the host system.
+
+#### Workaround
+
+The adopted workaround consisted of manually launching the Ubuntu WSL2 distribution after Windows startup. This action initialized the Linux environment and automatically restored the Kubernetes node.
+
+#### Impact
+
+The issue did not affect the functionality of the platform once Ubuntu had been launched. However, it introduced a manual initialization step, reducing the level of automation expected from the deployment process.
+
+#### Lessons Learned
+
+Deployments based on WSL2 should carefully consider the startup sequence of the Linux environment. Although the workaround was acceptable for a Proof of Concept, a production-ready implementation should provide a fully automated initialization process.
+
 ## Limitations
 
 ## Future Work

@@ -1,3 +1,13 @@
 # Architecture
 
-This document describes the architecture of the Proof of Concept.
+## Overview
+
+This document describes the architecture of the Proof of Concept developed to evaluate the integration of Kubernetes-based development environments into existing Active Directory classrooms.
+
+The proposed architecture reuses the existing classroom infrastructure while introducing containerized development environments with minimal changes to the traditional management model.
+
+The architecture consists of three main components:
+
+- Active Directory infrastructure
+- Teacher workstation (Kubernetes Control Plane)
+- Student workstations (Worker Nodes)

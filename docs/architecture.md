@@ -16,7 +16,17 @@ The architecture consists of three main components:
 
 ![Architecture](../images/architecture-overview.png)
 
-1. Active Directory
+### 1. Active Directory Infrastructure
+
+The existing Active Directory Domain Services (AD DS) infrastructure remains unchanged.
+
+It continues to provide:
+
+- User authentication.
+- Group Policy management.
+- User and computer administration.
+
+The Proof of Concept does not replace or modify the existing Active Directory environment. Instead, it integrates Kubernetes-based development environments while preserving the traditional classroom management model.
 
 2. Teacher PC
 

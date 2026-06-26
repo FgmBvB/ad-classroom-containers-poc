@@ -26,11 +26,13 @@ As a consequence, the Kubernetes environment was not immediately available.
 
 However, simply opening the Ubuntu distribution initialized WSL2 correctly. Once Ubuntu started, the k3s services automatically joined the Kubernetes cluster without requiring any additional commands or manual configuration.
 
-### Evidence
+### Observed Evidence
 
-During testing, WSL2 consistently displayed startup warnings related to nested virtualization and mirrored networking before initializing the Linux environment.
+During startup, WSL2 displayed warnings related to nested virtualization and mirrored networking before initializing the Linux environment.
 
+The Linux environment still started successfully, allowing the k3s services to join the Kubernetes cluster automatically after Ubuntu was opened.
 ![WSL2 startup warning](../images/wsl2-startup-warning.png)
+*Figure 1. WSL2 startup warnings observed during the initialization of the Ubuntu environment.*
 
 ## Investigation
 

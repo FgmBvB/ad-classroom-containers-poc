@@ -21,6 +21,7 @@ The architecture consists of three main components:
 The Proof of Concept was validated using one teacher workstation acting as the Kubernetes control plane and two student workstations acting as worker nodes.
 
 ![Cluster nodes](../images/kubernetes-cluster-nodes.png)
+*Figure 2. Validation of the Kubernetes cluster showing one control plane and two worker nodes in Ready state.*
 
 ### 1. Active Directory Infrastructure
 

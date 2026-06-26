@@ -86,6 +86,20 @@ This repository documents both the implementation process and the technical chal
 
 ## Implementation Challenges
 
+During the implementation of this Proof of Concept, several technical challenges were identified. These challenges were mainly related to the interaction between Windows, WSL2, Kubernetes, VMware, and the networking model required to expose services across the classroom.
+
+Rather than hiding these issues, this project documents them as part of the engineering process. The goal was not only to build a working prototype, but also to understand the limitations, workarounds, and design trade-offs involved in running container-based development environments on top of an existing Windows and Active Directory infrastructure.
+
+The main challenges identified were:
+
+- WSL2 initialization during system startup.
+- Networking behavior between WSL2, Hyper-V, and VMware.
+- Limitations encountered while testing WSL2 mirrored networking.
+- Service exposure using NodePort and port forwarding.
+- Use of Windows bind mounts for persistent student storage.
+- Operational complexity when scaling the deployment to multiple students.
+
+
 ## Results
 
 ## Limitations

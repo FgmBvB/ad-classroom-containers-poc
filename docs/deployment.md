@@ -39,7 +39,7 @@ The deployment workflow was designed so that the instructor could launch classro
 
 The deployment process was designed so that instructors would not need to manually create Kubernetes resources. The instructor only needed to select the desired container image, adjust the number of students if required, and execute the deployment script.
 
-In the implemented version, some values still had to be adjusted in the deployment script, such as the number of students or the selected container image. This was identified as a limitation of the Proof of Concept rather than a final design objective.
+The Proof of Concept still required editing a small number of parameters in the deployment script, such as the container image and the number of students. Automating these configuration steps was identified as future work.
 
 ## Persistent Storage
 

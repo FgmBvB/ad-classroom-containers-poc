@@ -99,6 +99,9 @@ The main challenges identified were:
 - Use of Windows bind mounts for persistent student storage.
 - Operational complexity when scaling the deployment to multiple students.
 
+For a detailed discussion of the implementation challenges encountered during the project, see:
+
+- [Implementation Challenges](docs/implementation-challenges.md)
 
 ## Results
 

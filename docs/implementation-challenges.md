@@ -4,238 +4,170 @@
 
 This document describes the main technical challenges encountered during the implementation of the Proof of Concept.
 
-Rather than only presenting the final solution, this document records the engineering process followed to investigate, understand, and solve the problems that appeared while integrating Kubernetes, WSL2, Hyper-V, VMware, and Windows-based educational environments.
+Rather than focusing only on the final solution, this document records the engineering decisions, observations and limitations identified while integrating Kubernetes, WSL2 and Windows-based educational environments.
 
-The documented challenges represent real implementation issues encountered during the project.
-
-## Challenges
+The objective is to document the real implementation experience, including both successful solutions and unresolved limitations.
 
 ---
 
-## Challenge 1 – WSL2 initialization after Windows startup
+# Challenge 1 – WSL2 Environment Initialization
 
-### Problem
+## Background
 
-The original objective was for every student workstation to automatically start WSL2 and immediately join the Kubernetes cluster after Windows boot.
+One of the objectives of the project was to minimize the number of manual actions required by the instructor before starting a classroom session.
 
-However, this behavior could not be achieved reliably.
+Ideally, the Kubernetes environment should become available automatically after Windows startup.
 
-### Investigation
+## Observed Behavior
 
-Several approaches were evaluated in order to automatically initialize the Linux environment during system startup.
+After Windows started, the Ubuntu WSL2 distribution was not automatically initialized.
 
-Among the tested approaches were:
+As a consequence, the Kubernetes environment was not immediately available.
 
-- Windows startup scripts.
-- Scheduled Tasks.
-- Linux startup scripts.
-- Cron jobs inside WSL2.
+However, simply opening the Ubuntu distribution initialized WSL2 correctly. Once Ubuntu started, the k3s services automatically joined the Kubernetes cluster without requiring any additional commands or manual configuration.
 
-Although these methods successfully launched different processes, none of them consistently initialized the complete WSL2 environment required by k3s.
+## Investigation
 
-As a result, the Kubernetes agent did not always start correctly after Windows boot.
+Several approaches were explored in an attempt to automate the initialization process, including Windows startup scripts and Linux startup mechanisms.
 
-### Adopted Workaround
+None of these approaches produced a completely reliable startup sequence within the scope of this Proof of Concept.
 
-The adopted solution was to manually open the Ubuntu WSL2 distribution after Windows startup.
+## Adopted Workaround
 
-Once Ubuntu was started, the Linux environment initialized correctly and the k3s agent automatically joined the Kubernetes cluster without requiring additional user interaction.
+The adopted solution consisted of manually opening the Ubuntu distribution before starting the classroom session.
 
-### Lessons Learned
+This action required only a single click and automatically restored the Kubernetes environment.
 
-WSL2 does not currently provide a completely reliable mechanism for automatically initializing complex Linux services immediately after Windows startup in every environment.
+## Lessons Learned
 
-For the purposes of this Proof of Concept, a manual initialization step was considered acceptable because it does not affect the technical feasibility of the proposed architecture.
+The project demonstrated that the proposed architecture works correctly once WSL2 has been initialized.
 
----
-
-## Challenge 2 – WSL2 Mirrored Networking Investigation
-
-### Background
-
-One of the main objectives of the Proof of Concept was to allow every workstation in the classroom to communicate directly through the existing network without requiring additional routing or complex network configuration.
-
-Microsoft introduced **Mirrored Networking** for WSL2 to improve network integration between Windows and Linux. Initially, this appeared to be the ideal solution for the proposed architecture.
-
-### Expected Behavior
-
-The expected behavior was:
-
-* WSL2 should obtain direct access to the classroom network.
-* Kubernetes services should become directly reachable from other workstations.
-* Port forwarding mechanisms should no longer be necessary.
-* Deployment would become considerably simpler.
-
-### Investigation
-
-Several tests were performed using Mirrored Networking.
-
-Although the Linux environment gained improved network integration with Windows, the expected communication between classroom workstations was not consistently achieved under the tested environment.
-
-The behavior was also influenced by the interaction between:
-
-* Hyper-V
-* VMware
-* Windows networking
-* WSL2 virtualization
-
-As a result, Mirrored Networking did not completely eliminate the networking limitations required by the Proof of Concept.
-
-### Adopted Solution
-
-Instead of relying on Mirrored Networking, the final implementation continued using the default WSL2 networking model together with manual service exposure techniques.
-
-This solution provided stable and predictable behavior during testing.
-
-### Lessons Learned
-
-Although Mirrored Networking is a promising feature, its behavior may vary depending on the virtualization environment and network configuration.
-
-For this Proof of Concept, the traditional WSL2 networking model provided more reliable results.
-
+Automating the startup of the Linux environment remains an area for future improvement.
 
 ---
 
-## Challenge 3 – Hyper-V and VMware Coexistence
+# Challenge 2 – Networking Between Windows and WSL2
 
-### Background
+## Background
 
-The Proof of Concept was developed and tested in a virtualized environment using VMware while simultaneously relying on Hyper-V technologies required by WSL2.
+The most significant challenge encountered during the project was networking.
 
-This introduced additional complexity because both virtualization platforms had to coexist correctly.
+Development environments executed inside Kubernetes pods running on WSL2, while students accessed them from Windows using a web browser.
 
-### Problem
+This required reliable communication between Windows and the Linux networking environment.
 
-Several networking and virtualization issues appeared during testing, making it difficult to obtain a stable environment for Kubernetes.
+## Expected Behavior
 
-Some features behaved differently depending on the active virtualization configuration.
+The initial objective was to simplify networking by using WSL2 Mirrored Networking.
 
-### Investigation
+The expected result was that Windows and Linux would share the same network, allowing Kubernetes services to become directly accessible without additional port forwarding mechanisms.
 
-Different VMware and Hyper-V configurations were evaluated throughout the project.
+## Observed Behavior
 
-Special attention was given to nested virtualization support, virtual network adapters, and the interaction between VMware virtual machines and the Hyper-V components used internally by WSL2.
+Under the testing environment, Mirrored Networking did not behave as expected.
 
-The investigation confirmed that virtualization settings could directly affect the behavior of WSL2 networking and Kubernetes communication.
+The Linux environment displayed warnings indicating problems enabling mirrored networking, and Kubernetes services were still not directly reachable from student workstations.
 
-### Adopted Solution
+As a consequence, components such as NGINX and Traefik could not be used as originally planned.
 
-The final implementation used a configuration that allowed VMware and Hyper-V to coexist while maintaining a stable Kubernetes environment for the Proof of Concept.
+Student connections reached the Windows host instead of the Linux environment where the Kubernetes pods were actually running.
 
-Although the configuration required careful setup, it provided reliable operation during the validation tests.
+## Adopted Solution
 
-### Lessons Learned
+The final implementation exposed Kubernetes services through Windows using **netsh interface portproxy**.
 
-Running VMware together with Hyper-V-based technologies is possible, but requires careful configuration and validation.
+Portproxy redirected incoming Windows connections towards the services running inside WSL2.
 
-Virtualization should be considered an important factor when troubleshooting networking issues involving WSL2 and Kubernetes.
+Although this solution required additional configuration, it provided stable browser access for classroom testing.
 
----
+## Virtualization Considerations
 
-## Challenge 4 – Kubernetes Service Exposure (NodePort and Port Forwarding)
+During the investigation, a possible interaction between VMware Workstation and the Hyper-V technologies required by WSL2 was considered.
 
-### Background
+Nested virtualization was enabled during testing.
 
-Student development environments needed to be accessible through a web browser from inside the classroom.
+However, the project did not conclusively demonstrate that VMware was the root cause of the networking behavior.
 
-Since Kubernetes services were running inside WSL2, exposing them to other workstations required additional networking mechanisms.
+Therefore, this should be considered a possible contributing factor rather than a confirmed conclusion.
 
-### Problem
+## Lessons Learned
 
-The default Kubernetes networking configuration was not sufficient to make the services directly reachable from other classroom computers.
+Networking between Windows and Linux virtualized environments proved to be considerably more complex than initially expected.
 
-Additional mechanisms were required to publish the services outside the WSL2 virtual network.
-
-### Investigation
-
-Several alternatives were evaluated during the project, including Kubernetes NodePort services and different Windows port forwarding approaches.
-
-Each alternative was tested to determine its compatibility with the existing classroom infrastructure and the WSL2 networking model.
-
-### Adopted Solution
-
-The final implementation used Kubernetes services together with Windows port forwarding to expose the required development environments.
-
-This solution provided stable browser access while preserving the existing classroom infrastructure.
-
-### Lessons Learned
-
-Exposing Kubernetes services from WSL2 requires additional networking configuration.
-
-Although this increases deployment complexity, it allows containerized development environments to be integrated into traditional Windows classrooms without modifying the existing Active Directory infrastructure.
+Adding multiple abstraction layers—including Windows networking, Hyper-V, WSL2, Kubernetes and browser access—can significantly increase the complexity of service communication.
 
 ---
 
-## Challenge 5 – Persistent Storage Using Windows Bind Mounts
+# Challenge 3 – Persistent Storage
 
-### Background
+## Background
 
-Student development environments required persistent storage so that files would remain available after containers were restarted or recreated.
+Student work should remain available even if containers were recreated or the Kubernetes environment was restarted.
 
-By default, storing project data inside the Linux filesystem of WSL2 would make access from Windows less convenient.
+## Adopted Solution
 
-### Problem
+Each student was assigned an individual directory on the Windows host.
 
-Project files needed to remain available independently of the lifecycle of Kubernetes containers while also being easily accessible to students from Windows.
+For example:
 
-### Investigation
+```text
+C:\K3\aula1\vscode\alumno1
+```
 
-Different storage approaches were considered during the design phase.
+These directories were automatically created by the deployment script and mounted inside the corresponding Kubernetes container using bind mounts.
 
-The selected solution needed to satisfy the following requirements:
+This approach ensured that project files remained available independently of the container lifecycle.
 
-* Data persistence after container recreation.
-* Easy access from Windows.
-* Simple backup and file management.
-* Compatibility with Kubernetes volumes.
+## Benefits
 
-### Adopted Solution
+* Student work persists across container recreation.
+* Files remain directly accessible from Windows.
+* No interaction with the Linux filesystem is required.
+* Existing Windows backup procedures can still be used.
 
-Persistent storage was implemented using Windows folders mapped into the containers through bind mounts.
+## Lessons Learned
 
-Each student has an individual folder on the Windows host that is mounted inside the corresponding development container.
-
-This approach separates application execution from data storage.
-
-### Lessons Learned
-
-Using Windows bind mounts proved to be a practical solution for educational environments.
-
-Students can easily access their files without interacting with the Linux filesystem while preserving all the advantages of containerized development environments.
+Separating application execution from data storage greatly simplified classroom management while improving reliability.
 
 ---
 
-## Challenge 6 – Deployment Scalability
+# Challenge 4 – Deployment Scalability
 
-### Background
+## Background
 
-The Proof of Concept was designed for classroom environments where multiple students require isolated development environments.
+The architecture was designed to support multiple students while reusing the existing classroom infrastructure.
 
-As the number of students increases, deployment and management become more complex.
+Instead of executing every workload on the teacher workstation, student computers participate as Kubernetes worker nodes and contribute their own computing resources.
 
-### Problem
+## Current Validation
 
-Creating Kubernetes resources manually for every student is practical for demonstrations but becomes inefficient in larger classrooms.
+The Proof of Concept was validated using a virtualized environment consisting of:
 
-Managing dozens of development environments requires automation.
+* Teacher workstation
+* Two student workstations
+* Active Directory server
 
-### Investigation
+Although the validation environment was intentionally small, the architecture was designed with larger classrooms in mind.
 
-The deployment process was designed with scalability in mind.
+## Current Limitation
 
-PowerShell scripts were developed to automate the creation of Kubernetes resources, persistent storage folders, and browser access configuration.
+The deployment process still requires students to access their assigned development environment manually.
 
-The architecture was also designed to distribute workloads across the available student workstations instead of relying on a single central server.
+Simplifying this process would improve the usability of the solution for larger classrooms.
 
-### Adopted Solution
+## Future Improvements
 
-The final implementation automates most deployment tasks while allowing each student workstation to contribute computing resources as a Kubernetes worker node.
+Possible improvements include:
 
-This distributed approach reduces the hardware requirements of the teacher workstation and makes better use of the existing classroom infrastructure.
+* Fully automated student access.
+* Simplified deployment procedures.
+* Load balancing across multiple teacher nodes if required.
+* Additional automation of Kubernetes resource provisioning.
 
-### Lessons Learned
+## Lessons Learned
 
-Although additional automation would be desirable for large-scale deployments, the Proof of Concept demonstrates that the proposed architecture can be extended to support a greater number of students without fundamentally changing the system design.
+The project demonstrates that containerized development environments can be distributed across existing classroom computers instead of relying exclusively on a dedicated central server.
 
-Future improvements should focus on simplifying deployment and reducing manual configuration steps.
+This allows existing hardware resources to be reused while maintaining isolated development environments for every student.
+
 

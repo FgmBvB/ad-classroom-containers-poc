@@ -47,8 +47,53 @@ WSL2 does not currently provide a completely reliable mechanism for automaticall
 
 For the purposes of this Proof of Concept, a manual initialization step was considered acceptable because it does not affect the technical feasibility of the proposed architecture.
 
-2. WSL2 mirrored networking limitations
-3. 
+---
+
+## Challenge 2 – WSL2 Mirrored Networking Investigation
+
+### Background
+
+One of the main objectives of the Proof of Concept was to allow every workstation in the classroom to communicate directly through the existing network without requiring additional routing or complex network configuration.
+
+Microsoft introduced **Mirrored Networking** for WSL2 to improve network integration between Windows and Linux. Initially, this appeared to be the ideal solution for the proposed architecture.
+
+### Expected Behavior
+
+The expected behavior was:
+
+* WSL2 should obtain direct access to the classroom network.
+* Kubernetes services should become directly reachable from other workstations.
+* Port forwarding mechanisms should no longer be necessary.
+* Deployment would become considerably simpler.
+
+### Investigation
+
+Several tests were performed using Mirrored Networking.
+
+Although the Linux environment gained improved network integration with Windows, the expected communication between classroom workstations was not consistently achieved under the tested environment.
+
+The behavior was also influenced by the interaction between:
+
+* Hyper-V
+* VMware
+* Windows networking
+* WSL2 virtualization
+
+As a result, Mirrored Networking did not completely eliminate the networking limitations required by the Proof of Concept.
+
+### Adopted Solution
+
+Instead of relying on Mirrored Networking, the final implementation continued using the default WSL2 networking model together with manual service exposure techniques.
+
+This solution provided stable and predictable behavior during testing.
+
+### Lessons Learned
+
+Although Mirrored Networking is a promising feature, its behavior may vary depending on the virtualization environment and network configuration.
+
+For this Proof of Concept, the traditional WSL2 networking model provided more reliable results.
+
+
 4. Hyper-V and VMware coexistence
 5. 
 6. Kubernetes service exposure (NodePort and port forwarding)

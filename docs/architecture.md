@@ -11,3 +11,17 @@ The architecture consists of three main components:
 - Active Directory infrastructure
 - Teacher workstation (Kubernetes Control Plane)
 - Student workstations (Worker Nodes)
+
+## Architecture Diagram
+
+![Architecture](../images/architecture-overview.png)
+
+1. Active Directory
+
+2. Teacher PC
+
+3. Student PCs
+
+4. Persistent Storage
+
+5. Containerized Development Environment

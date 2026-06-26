@@ -16,6 +16,12 @@ The architecture consists of three main components:
 
 ![Architecture](../images/architecture-overview.png)
 
+### Cluster Validation
+
+The Proof of Concept was validated using one teacher workstation acting as the Kubernetes control plane and two student workstations acting as worker nodes.
+
+![Cluster nodes](../images/kubernetes-cluster-nodes.png)
+
 ### 1. Active Directory Infrastructure
 
 The existing Active Directory Domain Services (AD DS) infrastructure remains unchanged.

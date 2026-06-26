@@ -1,31 +1,18 @@
 # Implementation Challenges
 
-This document contains the detailed technical challenges identified during the Proof of Concept.
+## Overview
 
-## Challenge 1 – WSL2 Environment Initialization
+This document describes the main technical challenges encountered during the implementation of the Proof of Concept.
 
-After restarting Windows, the WSL2 environment was not automatically initialized.
+Rather than only presenting the final solution, this document records the engineering process followed to investigate, understand, and solve the problems that appeared while integrating Kubernetes, WSL2, Hyper-V, VMware, and Windows-based educational environments.
 
-The Ubuntu distribution had to be launched manually. Once Ubuntu was opened, the WSL2 environment initialized correctly and the k3s node automatically joined the Kubernetes cluster without requiring additional commands.
+The documented challenges represent real implementation issues encountered during the project.
 
-This did not prevent the Proof of Concept from working, but it introduced a manual step that reduced the expected level of automation.
+## Challenges
 
-## Challenge 2 – WSL2 Mirrored Networking
-
-To be documented.
-
-## Challenge 3 – Hyper-V and VMware Interaction
-
-To be documented.
-
-## Challenge 4 – Service Exposure
-
-To be documented.
-
-## Challenge 5 – Persistent Storage
-
-To be documented.
-
-## Challenge 6 – Deployment Scalability
-
-To be documented.
+1. WSL2 initialization after Windows startup
+2. WSL2 mirrored networking limitations
+3. Hyper-V and VMware coexistence
+4. Kubernetes service exposure (NodePort and port forwarding)
+5. Persistent storage using Windows bind mounts
+6. Deployment scalability

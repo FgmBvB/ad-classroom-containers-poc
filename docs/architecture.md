@@ -15,6 +15,7 @@ The architecture consists of three main components:
 ## Architecture Diagram
 
 ![Architecture](../images/architecture-overview.png)
+*Figure 1. Overall architecture of the Proof of Concept showing the integration of Active Directory, Kubernetes (k3s), WSL2, teacher and student workstations, and persistent storage.*
 
 ### Cluster Validation
 

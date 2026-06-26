@@ -2,52 +2,70 @@
 
 ## Overview
 
-This document summarizes the results obtained during the Proof of Concept.
+This document summarizes the outcomes of the Proof of Concept and evaluates whether the proposed architecture achieved its original objectives.
 
-The objective was not to build a production-ready platform, but to validate whether container-based development environments could be integrated into existing Active Directory classrooms using Windows, WSL2, Kubernetes and student workstations as worker nodes.
+The goal of the project was not to build a production-ready platform, but to determine whether Kubernetes-based development environments could be integrated into existing Active Directory classrooms while preserving the existing Windows infrastructure.
 
-## Achieved Results
+---
 
-The Proof of Concept demonstrated that:
+## Achieved Objectives
 
-- A lightweight Kubernetes cluster can be deployed using k3s and WSL2.
-- The teacher workstation can operate as the Kubernetes control plane.
-- Student workstations can join the cluster as worker nodes.
-- Development environments can be deployed as isolated Kubernetes pods.
-- Students can access their environments through a web browser.
-- Student data can persist using Windows bind mounts.
-- Existing classroom infrastructure can be reused without replacing Active Directory.
+The Proof of Concept successfully demonstrated that:
+
+* A lightweight Kubernetes cluster can be deployed using k3s on top of WSL2.
+* A teacher workstation can successfully operate as the Kubernetes control plane.
+* Student workstations can join the cluster as Kubernetes worker nodes.
+* Development environments can be deployed as isolated Kubernetes pods.
+* Students can access their development environments through a standard web browser.
+* Student files can persist independently of the container lifecycle by using Windows bind mounts.
+* Existing Active Directory administration and classroom management can remain unchanged.
+
+---
 
 ## Validation Environment
 
-The Proof of Concept was validated in a virtualized environment composed of:
+The proposed architecture was validated using a virtualized classroom environment consisting of:
 
-- One Active Directory server.
-- One teacher workstation.
-- Two student workstations.
+* One Active Directory server.
+* One teacher workstation.
+* Two student workstations.
 
-This environment was sufficient to validate the architecture and demonstrate the feasibility of the proposed approach.
+Although intentionally limited in size, this environment was sufficient to validate the proposed architecture, deployment workflow and communication between the different system components.
 
-## Key Outcome
+---
 
-The main result of the project is that the architecture is technically feasible as a Proof of Concept.
+## Engineering Findings
 
-However, the implementation also showed that networking between Windows, WSL2 and Kubernetes is the most complex part of the solution.
+Beyond validating the proposed architecture, the project provided several practical engineering observations.
 
-## Not Production Ready
+The most significant challenges were not related to Kubernetes itself, but to the interaction between Windows, WSL2, networking and virtualization.
 
-The current implementation should not be considered production-ready.
+The investigation demonstrated that integrating multiple infrastructure layers can introduce unexpected complexity, particularly when exposing Kubernetes services running inside WSL2 to external Windows clients.
 
-The main reasons are:
+These findings influenced several implementation decisions, including the adoption of Windows port forwarding and deployment automation scripts.
 
-- Manual WSL2 initialization is still required.
-- Service exposure depends on Windows port forwarding.
-- Student access should be simplified.
-- Additional security hardening would be required.
-- Larger classroom deployments would require further validation.
+---
+
+## Current Limitations
+
+Although the Proof of Concept successfully achieved its objectives, several limitations remain before the proposed solution could be considered for production environments.
+
+The current implementation still requires:
+
+* Manual initialization of the WSL2 environment.
+* Windows port forwarding to expose Kubernetes services.
+* Manual configuration of certain deployment parameters.
+* Additional security hardening.
+* Validation in larger classroom environments.
+
+These limitations do not invalidate the proposed architecture but identify areas requiring further engineering work.
+
+---
 
 ## Conclusion
 
-The Proof of Concept successfully validated the core idea: existing Windows classrooms managed through Active Directory can be extended with container-based development environments without replacing the current infrastructure.
+The Proof of Concept successfully demonstrated that Kubernetes-based development environments can be integrated into existing Windows classrooms managed through Active Directory without replacing the existing infrastructure.
 
-At the same time, the project identified important limitations that should be addressed before considering a real deployment.
+The project also highlighted the practical challenges involved in combining Windows, WSL2, Kubernetes and virtualization technologies within the same environment.
+
+Overall, the results indicate that the proposed architecture is technically feasible while identifying the engineering improvements required before considering a production deployment.

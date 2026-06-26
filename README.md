@@ -4,7 +4,7 @@ A Proof of Concept demonstrating how Kubernetes-based development environments c
 
 ---
 
-## Why This Project?
+## Why This Proof of Concept?
 
 Many educational institutions already have Windows classrooms managed through Active Directory.
 
@@ -22,6 +22,8 @@ Modern software development increasingly relies on containerized environments to
 
 This Proof of Concept evaluates the feasibility of introducing Kubernetes into traditional Active Directory classrooms while reusing the existing infrastructure and hardware already available.
 
+This repository documents both the implemented solution and the engineering process followed to investigate its feasibility.
+
 ---
 
 ## Research Question
@@ -32,32 +34,32 @@ This Proof of Concept evaluates the feasibility of introducing Kubernetes into t
 
 ## Technologies Used
 
-* Kubernetes (k3s)
-* Windows 11
-* Active Directory Domain Services (AD DS)
-* Windows Subsystem for Linux 2 (WSL2)
-* PowerShell
-* Bash
-* Portainer
-* VMware Workstation
-* VS Code Server (used during the Proof of Concept)
+- Kubernetes (k3s)
+- Windows 11
+- Active Directory Domain Services (AD DS)
+- Windows Subsystem for Linux 2 (WSL2)
+- PowerShell
+- Bash
+- Portainer
+- VMware Workstation
+- VS Code Server (used during the Proof of Concept)
 
 ---
 
 ## Skills Demonstrated
 
-* Kubernetes deployment
-* Infrastructure automation
-* Windows administration
-* Active Directory integration
-* WSL2 administration
-* Linux administration
-* PowerShell scripting
-* Bash scripting
-* Containerized development environments
-* Technical troubleshooting
-* Technical documentation
-* Infrastructure integration
+- Kubernetes deployment
+- Infrastructure automation
+- Windows administration
+- Active Directory integration
+- WSL2 administration
+- Linux administration
+- PowerShell scripting
+- Bash scripting
+- Containerized development environments
+- Technical troubleshooting
+- Technical documentation
+- Infrastructure integration
 
 ---
 
@@ -93,39 +95,6 @@ The following screenshot shows the Kubernetes cluster successfully running durin
 
 ---
 
-## Key Features
-
-* Integration with existing Active Directory classrooms.
-* Lightweight Kubernetes (k3s) cluster running on WSL2.
-* Distributed execution across teacher and student workstations.
-* Automated deployment using PowerShell and Bash scripts.
-* Browser-based development environments demonstrated using VS Code Server.
-* Persistent student storage using Windows bind mounts.
-* Reuse of existing classroom hardware.
-* Documentation of implementation challenges and engineering decisions.
-
-## Proposed Architecture
-
-...
-
-(Figura 1)
-
----
-
-## Cluster Validation
-
-The following screenshot shows the Kubernetes cluster successfully running during the validation of the Proof of Concept.
-
-<p align="center">
-  <img src="images/kubernetes-cluster-nodes.png" width="950">
-</p>
-
-<p align="center">
-<i>Figure 2. Kubernetes cluster showing one control plane and two worker nodes in the Ready state.</i>
-</p>
-
----
-
 ## Student Development Environment
 
 The following screenshot shows a student accessing an isolated browser-based development environment running inside a Kubernetes pod.
@@ -142,7 +111,14 @@ The following screenshot shows a student accessing an isolated browser-based dev
 
 ## Key Features
 
-...
+- Integration with existing Active Directory classrooms.
+- Lightweight Kubernetes (k3s) cluster running on WSL2.
+- Distributed execution across teacher and student workstations.
+- Automated deployment using PowerShell and Bash scripts.
+- Browser-based development environments demonstrated using VS Code Server.
+- Persistent student storage using Windows bind mounts.
+- Reuse of existing classroom hardware.
+- Documentation of implementation challenges and engineering decisions.
 
 ---
 
@@ -152,12 +128,14 @@ The implemented Proof of Concept demonstrates that container-based development e
 
 The implementation validates:
 
-* Automated deployment of development environments.
-* Multi-student isolated workspaces.
-* Persistent storage across sessions.
-* Browser-based access to development tools.
-* Centralized cluster management through Kubernetes and Portainer.
-* Compatibility with existing Windows classroom infrastructure.
+- Automated deployment of development environments.
+- Multi-student isolated workspaces.
+- Persistent storage across sessions.
+- Browser-based access to development tools.
+- Centralized cluster management through Kubernetes and Portainer.
+- Compatibility with existing Windows classroom infrastructure.
+
+This Proof of Concept demonstrates that modern container technologies can be introduced into existing educational infrastructures while minimizing changes to the current administration model.
 
 ---
 
@@ -167,16 +145,16 @@ Rather than presenting only the final solution, this repository documents the te
 
 The main investigated topics include:
 
-* WSL2 initialization after Windows startup.
-* Networking between Windows and WSL2.
-* Mirrored Networking limitations.
-* NodePort and Windows port forwarding.
-* Persistent storage using Windows bind mounts.
-* Deployment scalability.
+- WSL2 initialization after Windows startup.
+- Networking between Windows and WSL2.
+- Mirrored Networking limitations.
+- NodePort and Windows port forwarding.
+- Persistent storage using Windows bind mounts.
+- Deployment scalability.
 
 Detailed documentation is available here:
 
-* [Implementation Challenges](docs/implementation-challenges.md)
+- [Implementation Challenges](docs/implementation-challenges.md)
 
 ---
 
@@ -184,23 +162,11 @@ Detailed documentation is available here:
 
 Additional technical documentation is available in:
 
-* [Architecture](docs/architecture.md)
-* [Deployment](docs/deployment.md)
-* [Implementation Challenges](docs/implementation-challenges.md)
-* [Results](docs/results.md)
-* [Future Work](docs/future-work.md)
-
----
-
-## Repository Structure
-
-```text
-docs/
-images/
-scripts/
-README.md
-LICENSE
-```
+- [Architecture](docs/architecture.md)
+- [Deployment](docs/deployment.md)
+- [Implementation Challenges](docs/implementation-challenges.md)
+- [Results](docs/results.md)
+- [Future Work](docs/future-work.md)
 
 ---
 
@@ -209,4 +175,3 @@ LICENSE
 This repository is published for educational and research purposes.
 
 See the [LICENSE](LICENSE) file for details.
-

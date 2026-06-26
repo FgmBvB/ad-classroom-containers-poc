@@ -164,7 +164,78 @@ Exposing Kubernetes services from WSL2 requires additional networking configurat
 
 Although this increases deployment complexity, it allows containerized development environments to be integrated into traditional Windows classrooms without modifying the existing Active Directory infrastructure.
 
-7. 
-8. Persistent storage using Windows bind mounts
-9. 
-10. Deployment scalability
+---
+
+## Challenge 5 – Persistent Storage Using Windows Bind Mounts
+
+### Background
+
+Student development environments required persistent storage so that files would remain available after containers were restarted or recreated.
+
+By default, storing project data inside the Linux filesystem of WSL2 would make access from Windows less convenient.
+
+### Problem
+
+Project files needed to remain available independently of the lifecycle of Kubernetes containers while also being easily accessible to students from Windows.
+
+### Investigation
+
+Different storage approaches were considered during the design phase.
+
+The selected solution needed to satisfy the following requirements:
+
+* Data persistence after container recreation.
+* Easy access from Windows.
+* Simple backup and file management.
+* Compatibility with Kubernetes volumes.
+
+### Adopted Solution
+
+Persistent storage was implemented using Windows folders mapped into the containers through bind mounts.
+
+Each student has an individual folder on the Windows host that is mounted inside the corresponding development container.
+
+This approach separates application execution from data storage.
+
+### Lessons Learned
+
+Using Windows bind mounts proved to be a practical solution for educational environments.
+
+Students can easily access their files without interacting with the Linux filesystem while preserving all the advantages of containerized development environments.
+
+---
+
+## Challenge 6 – Deployment Scalability
+
+### Background
+
+The Proof of Concept was designed for classroom environments where multiple students require isolated development environments.
+
+As the number of students increases, deployment and management become more complex.
+
+### Problem
+
+Creating Kubernetes resources manually for every student is practical for demonstrations but becomes inefficient in larger classrooms.
+
+Managing dozens of development environments requires automation.
+
+### Investigation
+
+The deployment process was designed with scalability in mind.
+
+PowerShell scripts were developed to automate the creation of Kubernetes resources, persistent storage folders, and browser access configuration.
+
+The architecture was also designed to distribute workloads across the available student workstations instead of relying on a single central server.
+
+### Adopted Solution
+
+The final implementation automates most deployment tasks while allowing each student workstation to contribute computing resources as a Kubernetes worker node.
+
+This distributed approach reduces the hardware requirements of the teacher workstation and makes better use of the existing classroom infrastructure.
+
+### Lessons Learned
+
+Although additional automation would be desirable for large-scale deployments, the Proof of Concept demonstrates that the proposed architecture can be extended to support a greater number of students without fundamentally changing the system design.
+
+Future improvements should focus on simplifying deployment and reducing manual configuration steps.
+

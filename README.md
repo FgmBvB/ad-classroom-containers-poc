@@ -105,10 +105,14 @@ For a detailed discussion of the implementation challenges encountered during th
 
 ## Results
 
-## Limitations
+A summary of the results obtained during the Proof of Concept is available in:
+
+- [Results](docs/results.md)
+
+---
 
 ## Future Work
 
-## Technologies Used
+Future improvements and possible extensions are documented in:
 
-## License
+- [Future Work](docs/future-work.md)

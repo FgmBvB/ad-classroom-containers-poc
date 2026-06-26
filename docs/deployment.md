@@ -37,7 +37,7 @@ One of the design goals of the Proof of Concept was to reduce the need for instr
 
 The deployment workflow was designed so that the instructor could launch classroom environments through scripts instead of manually creating Kubernetes resources.
 
-The intended idea was that the instructor would select the required development image and let the automation create the corresponding student environments, storage folders, and access configuration.
+The deployment process was designed so that instructors would not need to manually create Kubernetes resources. The instructor only needed to select the desired container image, adjust the number of students if required, and execute the deployment script.
 
 In the implemented version, some values still had to be adjusted in the deployment script, such as the number of students or the selected container image. This was identified as a limitation of the Proof of Concept rather than a final design objective.
 

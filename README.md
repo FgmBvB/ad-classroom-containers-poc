@@ -116,3 +116,24 @@ A summary of the results obtained during the Proof of Concept is available in:
 Future improvements and possible extensions are documented in:
 
 - [Future Work](docs/future-work.md)
+
+  ---
+
+## Technologies Used
+
+- Windows 11
+- Active Directory Domain Services (AD DS)
+- Windows Subsystem for Linux 2 (WSL2)
+- Kubernetes (k3s)
+- Portainer
+- PowerShell
+- VMware Workstation
+- VS Code Server / browser-based development environments
+
+---
+
+## License
+
+This repository is published for educational and research purposes.
+
+See the [LICENSE](LICENSE) file for details.

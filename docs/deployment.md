@@ -17,11 +17,11 @@ The deployment consists of the following steps:
 5. Student workstations initialize WSL2.
 6. Each student workstation automatically joins the Kubernetes cluster as a worker node.
 7. Development containers are deployed from the teacher workstation using PowerShell automation.
-8. Students access their isolated development environment through a web browser.
+8. Students access their isolated development environments through a web browser.
 
 ## Automation
 
-The deployment process was partially automated using PowerShell scripts.
+The deployment process was partially automated using PowerShell and Bash scripts.
 
 The automation was responsible for:
 
@@ -31,15 +31,19 @@ The automation was responsible for:
 * Configuring Kubernetes Services.
 * Assigning ports for browser access.
 
-  ## Instructor-Oriented Design
+The PowerShell scripts were intended to simplify the workflow for instructors working from Windows, while the Bash scripts executed the deployment tasks inside the Ubuntu WSL2 environment.
+
+This approach minimized the need for instructors to interact directly with the Linux terminal.
+
+## Instructor-Oriented Design
 
 One of the design goals of the Proof of Concept was to reduce the need for instructors to interact directly with Kubernetes commands.
 
-The deployment workflow was designed so that the instructor could launch classroom environments through scripts instead of manually creating Kubernetes resources.
+The deployment workflow was designed so that instructors could launch classroom environments through scripts instead of manually creating Kubernetes resources.
 
-The deployment process was designed so that instructors would not need to manually create Kubernetes resources. The instructor only needed to select the desired container image, adjust the number of students if required, and execute the deployment script.
+The instructor only needed to select the desired container image, adjust the number of students if required, and execute the deployment script.
 
-The Proof of Concept still required editing a small number of parameters in the deployment script, such as the container image and the number of students. Automating these configuration steps was identified as future work.
+The Proof of Concept still required editing a small number of parameters in the deployment script, such as the selected container image and the number of students. Automating these configuration steps was identified as future work.
 
 ## Persistent Storage
 

@@ -104,6 +104,46 @@ The following screenshot shows the Kubernetes cluster successfully running durin
 * Reuse of existing classroom hardware.
 * Documentation of implementation challenges and engineering decisions.
 
+## Proposed Architecture
+
+...
+
+(Figura 1)
+
+---
+
+## Cluster Validation
+
+The following screenshot shows the Kubernetes cluster successfully running during the validation of the Proof of Concept.
+
+<p align="center">
+  <img src="images/kubernetes-cluster-nodes.png" width="950">
+</p>
+
+<p align="center">
+<i>Figure 2. Kubernetes cluster showing one control plane and two worker nodes in the Ready state.</i>
+</p>
+
+---
+
+## Student Development Environment
+
+The following screenshot shows a student accessing an isolated browser-based development environment running inside a Kubernetes pod.
+
+<p align="center">
+  <img src="images/vscode-student-environment.png" width="950">
+</p>
+
+<p align="center">
+<i>Figure 3. Browser-based development environment running inside a Kubernetes pod.</i>
+</p>
+
+---
+
+## Key Features
+
+...
+
 ---
 
 ## Proof of Concept

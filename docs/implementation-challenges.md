@@ -94,9 +94,76 @@ Although Mirrored Networking is a promising feature, its behavior may vary depen
 For this Proof of Concept, the traditional WSL2 networking model provided more reliable results.
 
 
-4. Hyper-V and VMware coexistence
-5. 
-6. Kubernetes service exposure (NodePort and port forwarding)
+---
+
+## Challenge 3 – Hyper-V and VMware Coexistence
+
+### Background
+
+The Proof of Concept was developed and tested in a virtualized environment using VMware while simultaneously relying on Hyper-V technologies required by WSL2.
+
+This introduced additional complexity because both virtualization platforms had to coexist correctly.
+
+### Problem
+
+Several networking and virtualization issues appeared during testing, making it difficult to obtain a stable environment for Kubernetes.
+
+Some features behaved differently depending on the active virtualization configuration.
+
+### Investigation
+
+Different VMware and Hyper-V configurations were evaluated throughout the project.
+
+Special attention was given to nested virtualization support, virtual network adapters, and the interaction between VMware virtual machines and the Hyper-V components used internally by WSL2.
+
+The investigation confirmed that virtualization settings could directly affect the behavior of WSL2 networking and Kubernetes communication.
+
+### Adopted Solution
+
+The final implementation used a configuration that allowed VMware and Hyper-V to coexist while maintaining a stable Kubernetes environment for the Proof of Concept.
+
+Although the configuration required careful setup, it provided reliable operation during the validation tests.
+
+### Lessons Learned
+
+Running VMware together with Hyper-V-based technologies is possible, but requires careful configuration and validation.
+
+Virtualization should be considered an important factor when troubleshooting networking issues involving WSL2 and Kubernetes.
+
+---
+
+## Challenge 4 – Kubernetes Service Exposure (NodePort and Port Forwarding)
+
+### Background
+
+Student development environments needed to be accessible through a web browser from inside the classroom.
+
+Since Kubernetes services were running inside WSL2, exposing them to other workstations required additional networking mechanisms.
+
+### Problem
+
+The default Kubernetes networking configuration was not sufficient to make the services directly reachable from other classroom computers.
+
+Additional mechanisms were required to publish the services outside the WSL2 virtual network.
+
+### Investigation
+
+Several alternatives were evaluated during the project, including Kubernetes NodePort services and different Windows port forwarding approaches.
+
+Each alternative was tested to determine its compatibility with the existing classroom infrastructure and the WSL2 networking model.
+
+### Adopted Solution
+
+The final implementation used Kubernetes services together with Windows port forwarding to expose the required development environments.
+
+This solution provided stable browser access while preserving the existing classroom infrastructure.
+
+### Lessons Learned
+
+Exposing Kubernetes services from WSL2 requires additional networking configuration.
+
+Although this increases deployment complexity, it allows containerized development environments to be integrated into traditional Windows classrooms without modifying the existing Active Directory infrastructure.
+
 7. 
 8. Persistent storage using Windows bind mounts
 9. 

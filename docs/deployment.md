@@ -59,9 +59,9 @@ The deployment achieved the objectives of the Proof of Concept.
 
 However, several limitations were identified:
 
-* Manual WSL2 initialization.
-* Manual service exposure.
-* Limited deployment scalability.
-* Networking issues related to WSL2 and virtualization.
+- Manual WSL2 initialization after Windows startup.
+- Manual service exposure through Windows port forwarding.
+- Persistent storage directories only require manual modification when different directories are needed for a new classroom activity.
+- Networking complexity related to WSL2, Windows, and virtualization.
 
 These limitations are discussed in detail in the Implementation Challenges documentation.

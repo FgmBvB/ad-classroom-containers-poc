@@ -52,16 +52,19 @@ Future work should evaluate newer WSL2 networking capabilities and alternative K
 
 ## Scalability
 
-The architecture was validated using a virtualized environment consisting of one teacher workstation and two student workstations.
+The proposed architecture is designed to distribute workloads across student workstations rather than concentrating them on the teacher workstation.
 
-Future work should evaluate larger deployments involving complete classrooms in order to analyse:
+As additional computers join the Kubernetes cluster as worker nodes, the available computing resources increase accordingly.
 
-* Resource distribution across additional worker nodes.
-* Performance under higher workloads.
-* Scheduling efficiency.
-* Resource utilization as additional computers join the cluster.
+Although the Proof of Concept was validated using one teacher workstation and two student workstations, future work should validate the architecture in larger classroom environments in order to evaluate operational aspects such as:
 
-The distributed nature of Kubernetes makes it possible to increase the available computing capacity by incorporating additional classroom workstations into the cluster.
+* Cluster management in larger deployments.
+* Network behavior with additional worker nodes.
+* Resource scheduling under higher workloads.
+* Classroom administration at scale.
+
+The objective of these future evaluations is to validate the architecture under larger classroom conditions rather than to redesign its scalability model.
+
 
 ---
 

@@ -46,7 +46,17 @@ Possible improvements include:
 
 Networking was identified as one of the most challenging aspects of the project.
 
-Future work should evaluate newer WSL2 networking capabilities and alternative Kubernetes networking solutions that could reduce or eliminate the need for Windows port forwarding while maintaining compatibility with existing classroom infrastructures.
+During the Proof of Concept, traditional ingress or reverse proxy solutions such as NGINX or Traefik could not be used as originally intended because the expected WSL2 networking behavior was not achieved in the testing environment.
+
+As a workaround, the implementation relied on Windows port forwarding to expose Kubernetes services from WSL2 to the classroom network.
+
+Future work should revisit this design and evaluate the use of an ingress controller or internal load balancer running inside the Kubernetes cluster, such as:
+
+- NGINX Ingress Controller.
+- Traefik.
+- Other Kubernetes-native reverse proxy or load balancing solutions.
+
+These components could simplify service exposure by routing student traffic to the correct development environment while reducing the dependency on manually maintained Windows port forwarding rules.
 
 ---
 
